@@ -1,1 +1,2 @@
 ChemSpiPy==1.0.4
+lpthw.web==1.1
