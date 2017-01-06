@@ -19,13 +19,27 @@ class Index(object):
         # also_left = [cs.search(x)[0].image_url.encode('ascii','ignore') for x in left]
         expressions = form.equation.split('->') # expressions is a list of expressions like (compound1 + compound2 + ...)
         compounds_expressions = [x.split('+') for x in expressions] # list of lists
-        molecular_formulas = [[cs.search(compound)[-1].molecular_formula for compound in expression] for expression in compounds_expressions]
-        chemical_expressions = [' + '.join(x) for x in molecular_formulas]
-        chem_eqn = r" \rightarrow ".join(chemical_expressions)
+        expression_compound_objects = [[cs.search(compound)[-1] for compound in expression] for expression in compounds_expressions]
+        # chemical_expressions = [' + '.join(x) for x in molecular_formulas]
+        # chem_eqn = r" \rightarrow ".join(chemical_expressions)
+
+        chem_eqn_images = []
+        for expression in expression_compound_objects:
+            # chem_eqn_images.pop()
+            for compound in expression:
+                if is_organic(compound):
+                    chem_eqn_images.append(compound.image_url.encode('ascii', 'ignore'))
+                else:
+                    chem_eqn_images.append("https://latex.codecogs.com/gif.latex?\dpi{200}" + compound.molecular_formula)
+                chem_eqn_images.append("https://latex.codecogs.com/gif.latex?\dpi{200}+")
+            chem_eqn_images.pop()
+            chem_eqn_images.append(r"https://latex.codecogs.com/gif.latex?\dpi{200}\rightarrow")
+        chem_eqn_images.pop()
 
 
 
-        return render.index(equation = chem_eqn)
+
+        return render.index(equation = chem_eqn_images)
 
 
 def is_organic(compound):

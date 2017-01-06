@@ -2,7 +2,7 @@ $def with (equation)
 
 
 
-$if equation:
+$if False:
 	<!-- $equation -->
 	<a href="https://www.codecogs.com/eqnedit.php?latex=$equation" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$equation" title="$equation" /></a>
 	<!-- $also_left[0] -->
@@ -10,5 +10,11 @@ $if equation:
 	<form action ="/hello" method = "GET">
 		<button type="submit">Back</button>
 	</form>
-$else:
-    <em>Hello</em>, world!
+
+$for eqn in equation:
+	<img src="$eqn" align = "middle"/>
+	
+
+<form action ="/hello" method = "GET">
+	<button type="submit">Back</button>
+</form>
